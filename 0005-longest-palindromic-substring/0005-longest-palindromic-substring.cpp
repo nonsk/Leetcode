@@ -67,6 +67,10 @@ public:
                     // i = p.second;
                     break;
                 }
+                if(p.second-p.first > j-i){
+                    // i = p.second;
+                    break;
+                }
                 if (palcheck(s, i, j)) {
                     if(p.second-p.first < j-i){
                         p.first = i;
