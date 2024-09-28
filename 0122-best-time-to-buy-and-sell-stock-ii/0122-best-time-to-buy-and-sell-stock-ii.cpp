@@ -1,11 +1,6 @@
 class Solution {
 public:
     int solve(vector<int>& prices, int index, int buy,vector<vector<int>>& dp) {
-
-        if(index>=prices.size()){
-            // dp[index] = 0;
-            return 0;
-        }
         if(dp[index][1]!=-1&&buy==1){
             return dp[index][1];
         }
@@ -13,16 +8,13 @@ public:
             return dp[index][0];
         }
         if(index==prices.size()-1&&buy==0){
-            // dp[index] = prices[index];
             return prices[index];
         }
         if(index==prices.size()-1&&buy==1){
-            // dp[index] = 0;
             return 0;
         }
 
         int profit=0;
-
         if (buy) {
             profit = max(solve(prices, index + 1, 0,dp) - prices[index],
                          solve(prices, index + 1, 1,dp));
