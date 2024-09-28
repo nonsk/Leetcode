@@ -5,7 +5,7 @@ public:
         int n = grid.size();
         for (auto it : grid) {
             string s = "";
-            for (int i = 0; i < it.size(); i++) {
+            for (int i = 0; i < n; i++) {
                 s = s + to_string(it[i]);
                 s += ",";
             }
