@@ -6,7 +6,7 @@ public:
         while(s[s.size()-1]==' ') {s.pop_back();}
         if(s.size()==1){return 1;}
         n = s.size();
-        while(s[n-count-1]!=' '){
+        while(count!=n&&s[n-count-1]!=' '){
             count++;
         }
         return count;
