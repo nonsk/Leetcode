@@ -27,9 +27,6 @@ public:
         int maxLevel = 1;
 
         while (!q.empty()) {
-            //////////////
-            cout << q.front()->val << endl;
-            ///////////
             if (level == 0) {
                 if (max < sum) {
                     max = sum;
@@ -38,7 +35,6 @@ public:
                 sum = 0;
                 whichLevel++;
                 level = q.size();
-                cout << "level" << level << endl;
             } else {
                 traverse = q.front();
                 if (traverse->left != NULL) {
