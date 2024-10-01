@@ -38,11 +38,6 @@ public:
     int maxPathSum(TreeNode* root) {
         unordered_map<TreeNode*, pair<int, int>> dp;
         int root1 = solve(dp, root);
-        cout << solve(dp, root) << endl;
-        ;
-        for (auto it : dp) {
-             cout<<"for "<<it.first->val<<"->"<<it.second.first<<","<<it.second.second<<endl;
-        }
         return max(max_len(dp), root1);
     }
 };
