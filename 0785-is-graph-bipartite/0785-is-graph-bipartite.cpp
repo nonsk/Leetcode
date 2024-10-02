@@ -1,6 +1,7 @@
 class Solution {
 public:
-    bool fill(unordered_set<int> &A, unordered_set<int> &B,vector<char> &vis, int test, char yo,vector<vector<int>>& graph) {
+    bool fill(unordered_set<int>& A, unordered_set<int>& B, vector<char>& vis,
+              int test, char yo, vector<vector<int>>& graph) {
         vis[test] = yo;
         for (int i = 0; i < vis.size(); i++) {
             if (vis[i] == 'B') {
@@ -33,7 +34,10 @@ public:
         vector<char> vis(graph.size(), -1);
         bool ans = false;
         for (int i = 0; i < vis.size(); i++) {
-            ans = fill(A,B,vis,i,'A', graph) ||fill(A,B,vis,i,'B', graph) ;
+            if (1) {
+                ans = fill(A, B, vis, i, 'A', graph) ||
+                      fill(A, B, vis, i, 'B', graph);
+            }
         }
         return ans;
     }
