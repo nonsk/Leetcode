@@ -8,7 +8,6 @@ public:
         if (path[i][j] != INT_MAX) {
             return;
         }
-        cout << "func " << i << "," << j << endl;
         path[i][j] = min(path[i][j], count);
         count++;
         if (i > 0 && grid[i - 1][j] == 0) {
