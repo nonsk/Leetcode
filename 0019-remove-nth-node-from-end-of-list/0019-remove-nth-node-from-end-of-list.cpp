@@ -25,12 +25,8 @@ public:
             return NULL;
         }
         while (temp != NULL) {
-
-
             if (count >= size - n - 1) {
                 if(count > size - n - 1){
-
-                    // prev =  prev->next;
                     return prev->next;
                 }
                 ListNode* temp2 = temp;
