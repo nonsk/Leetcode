@@ -18,18 +18,18 @@ public:
             size++;
             temp = temp->next;
         }
-        cout << size << endl;
+
         temp = head;
         ListNode* prev = temp;
         if (size == 1 && n == 1) {
             return NULL;
         }
         while (temp != NULL) {
-            cout << temp->val << endl;
-            cout << "now " << count << " " << size - n - 1 << endl;
+
+
             if (count >= size - n - 1) {
                 if(count > size - n - 1){
-                    cout<<"val"<<prev->val;
+
                     // prev =  prev->next;
                     return prev->next;
                 }
