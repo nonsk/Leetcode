@@ -8,9 +8,7 @@ public:
         for (auto it : mp) {
             for (int i = 0; i < it.second.size(); i++) {
                 for (int j = i+1; j < it.second.size(); j++) {
-                    
                     if (abs(it.second[i] - it.second[j]) <= k) {
-                        
                         return true;
                     }
                 }
