@@ -4,47 +4,51 @@ public:
         int hSize = haystack.size();
         int nSize = needle.size();
 
-        
+        // Edge case: if the needle is empty, return 0.
         if (nSize == 0) return 0;
-        
+        // If needle is longer than haystack, return -1.
         if (nSize > hSize) return -1;
 
-        
-        vector<int> lps = buildLPS(needle);
+        // Create the LPS array in-place with minimal memory usage.
+        int lps[nSize];  // Using stack memory instead of heap-allocated vector.
+        buildLPS(needle, lps);  // Build the LPS array.
 
-        int i = 0, j = 0;  
+        // Perform the search with two pointers.
+        int i = 0, j = 0;  // i: index for haystack, j: index for needle.
         while (i < hSize) {
             if (haystack[i] == needle[j]) {
                 i++;
                 j++;
-                
+                // If we matched the entire needle, return the starting index.
                 if (j == nSize) return i - j;
             } else if (j > 0) {
-                j = lps[j - 1];  
+                j = lps[j - 1];  // Use LPS to skip unnecessary comparisons.
             } else {
-                i++;  
+                i++;  // No match and j == 0, move to the next character in haystack.
             }
         }
 
-        return -1; 
+        return -1;  // No match found.
     }
 
 private:
-    // Helper function to build the LPS array.
-    vector<int> buildLPS(const string& needle) {
+    // Build the LPS array in-place to minimize memory usage.
+    void buildLPS(const string& needle, int lps[]) {
         int nSize = needle.size();
-        vector<int> lps(nSize, 0);
-        int len = 0;  
+        int len = 0;  // Length of the previous longest prefix suffix.
+        lps[0] = 0;  // LPS value for the first character is always 0.
 
         for (int i = 1; i < nSize; ) {
             if (needle[i] == needle[len]) {
-                lps[i++] = ++len;
+                len++;
+                lps[i] = len;
+                i++;
             } else if (len > 0) {
-                len = lps[len - 1]; 
+                len = lps[len - 1];  // Use the previous LPS value.
             } else {
-                lps[i++] = 0;  
+                lps[i] = 0;
+                i++;
             }
         }
-        return lps;
     }
 };
