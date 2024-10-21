@@ -1,7 +1,6 @@
 class Solution {
 public:
     int calculate(string s) {
-
         int result = 0;
         int current = 0;
         int num = 0;
@@ -24,19 +23,6 @@ public:
                 }
                 i--;
                 num = calculate(bracket.substr(0,bracket.size()-1));
-                //current
-                // o = s[i+1];
-                // if (o == '+') {
-                //     result += current;
-                //     current = num;
-                // } else if (o == '-') {
-                //     result += current;
-                //     current = -num;
-                // } else if (o == '*') {
-                //     current *= num;
-                // } else if (o == '/') {
-                //     current /= num;
-                // }
             }
             if (isdigit(c)) {
                 num = num * 10 + (c - '0');
