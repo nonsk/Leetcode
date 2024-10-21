@@ -26,7 +26,7 @@ public:
         unordered_map<long long, int> mp;
         string last = "";
 
-        while (rem != 0 && limit < 100) {
+        while (rem != 0) {
             if (mp.find(rem) != mp.end()) {
 
                 ans.insert(mp[rem], "(");
