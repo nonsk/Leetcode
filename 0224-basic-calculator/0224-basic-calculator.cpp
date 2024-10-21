@@ -1,7 +1,7 @@
 class Solution {
 public:
     int calculate(string s) {
-        cout << s << endl;
+
         int result = 0;
         int current = 0;
         int num = 0;
