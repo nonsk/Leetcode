@@ -6,7 +6,6 @@ public:
         int num = 0;
         char o = '+';
         for (int i = 0; i < s.size(); i++) {
-            cout<<s[i]<<endl;
             char c = s[i];
             if (c == '(') {
                 int br = 1;
