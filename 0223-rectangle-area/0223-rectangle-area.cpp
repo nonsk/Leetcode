@@ -15,8 +15,8 @@ public:
     }
     int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1,
                     int bx2, int by2) {
-        sort(ax1, ay1, ax2, ay2);
-        sort(bx1, by1, bx2, by2);
+        // sort(ax1, ay1, ax2, ay2);
+        // sort(bx1, by1, bx2, by2);
         int totalArea = area(ax1, ay1, ax2, ay2) + area(bx1, by1, bx2, by2);
         int overlapX1 = max(ax1, bx1); 
         int overlapY1 = max(ay1, by1); 
