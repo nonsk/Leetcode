@@ -1,36 +1,28 @@
 class Solution {
 public:
     bool isSelfCrossing(vector<int>& distance) {
-        int x = 0;
-        int y = 0;
-        int dir = 0;
+        int n = distance.size();
+        
+        if (n < 4) return false;
 
-        for (int i = 3; i < distance.size(); i++) {
-            cout<<i<<endl;
-            if (i == 4 && distance[3] == distance[1] &&
-                distance[4] >= (distance[2] - distance[0])) {
+        for (int i = 3; i < n; ++i) {
+            
+            if (distance[i] >= distance[i - 2] && distance[i - 1] <= distance[i - 3]) {
                 return true;
             }
-            if (i <= 4) {
-                if (distance[i - 1] <= distance[i - 3] &&
-                    distance[i] >= distance[i - 2]) {
-                    return true;
-                }
-                continue;
+            
+            
+            if (i >= 4 && distance[i - 1] == distance[i - 3] && distance[i] + distance[i - 4] >= distance[i - 2]) {
+                return true;
             }
-            if (distance[i - 1] <= distance[i - 3]) {
-                if (distance[i - 3] - distance[i - 5] >= 0 &&
-                    distance[i - 1] >= distance[i - 3] - distance[i - 5]) {
-                    if (distance[i - 2] - distance[i - 4]>0&&distance[i] >= distance[i - 2] - distance[i - 4]) {
-                        return true;
-                    }
-                } else {
-                    if (distance[i - 2] - distance[i - 4]>=0 && distance[i] >= distance[i - 2] - distance[i - 4]) {
-                        return true;
-                    }
-                }
+
+            
+            if (i >= 5 && distance[i - 2] >= distance[i - 4] && distance[i] + distance[i - 4] >= distance[i - 2]
+                && distance[i - 1] <= distance[i - 3] && distance[i - 1] + distance[i - 5] >= distance[i - 3]) {
+                return true;
             }
         }
+
         return false;
     }
 };
