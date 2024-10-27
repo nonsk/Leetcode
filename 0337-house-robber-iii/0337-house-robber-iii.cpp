@@ -13,10 +13,10 @@ public:
             dp[root][can] = solve(true, root->left) + solve(true, root->right);
             return dp[root][can];
         }
-        dp[root][can] = root->val + solve(false, root->left) +
-                                solve(false, root->right);//,
-                            //solve(true, root->left) + solve(true, root->right));
+        dp[root][can] = max(root->val + solve(false, root->left) +
+                                solve(false, root->right),
+                            solve(true, root->left) + solve(true, root->right));
         return dp[root][can];
     }
-    int rob(TreeNode* root) { return max(solve(true, root),solve(false,root)); }
+    int rob(TreeNode* root) { return solve(true, root); }
 };
