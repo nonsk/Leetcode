@@ -6,9 +6,9 @@ public:
             dp[root][can] = 0;
             return 0;
         }
-        if (dp[root].count(can)) {
-            return dp[root][can];
-        }
+if (dp[root].find(can) != dp[root].end()) {
+    return dp[root][can];
+}
         if (!can) {
             dp[root][can] = solve(true, root->left) + solve(true, root->right);
             return dp[root][can];
