@@ -21,7 +21,6 @@ public:
             dp[root][can] = 0;
             return 0;
         }
-        cout << root->val << " ";
         if (!can) {
             dp[root][can] = solve(true, root->left) + solve(true, root->right);
             return dp[root][can];
