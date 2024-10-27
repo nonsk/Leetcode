@@ -1,21 +1,23 @@
 class Solution {
 public:
-    unordered_map<TreeNode*, unordered_map<bool, int>> dp;
-    int solve(bool can, TreeNode* root) {
-        if (root == NULL) {
-            dp[root][can] = 0;
-            return 0;
+    unordered_map<TreeNode*, pair<int, int>> dp;
+
+    pair<int, int> solve(TreeNode* root) {
+        if (root == nullptr) {
+            return {0, 0};
         }
-        if (dp[root].find(can) != dp[root].end()) {
-            return dp[root][can];
+        if (dp.find(root) != dp.end()) {
+            return dp[root];
         }
-        if (!can) {
-            dp[root][can] = solve(true, root->left) + solve(true, root->right);
-            return dp[root][can];
-        }
-        dp[root][1] = root->val + solve(false, root->left) + solve(false, root->right);
-        dp[root][0] = solve(true, root->left) + solve(true, root->right);
-        return max(dp[root][0],dp[root][1]);
+        pair<int, int> left = solve(root->left);
+        pair<int, int> right = solve(root->right);
+        int rob = root->val + left.first + right.first;
+        int notRob = max(left.first, left.second) + max(right.first, right.second);
+        dp[root] = {notRob, rob};
+        return dp[root];
     }
-    int rob(TreeNode* root) { return solve(true, root); }
+    int rob(TreeNode* root) {
+        pair<int, int> result = solve(root);
+        return max(result.first, result.second);
+    }
 };
