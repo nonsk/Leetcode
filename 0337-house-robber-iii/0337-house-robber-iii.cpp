@@ -14,12 +14,12 @@ class Solution {
 public:
     unordered_map<TreeNode*, unordered_map<bool, int>> dp;
     int solve(bool can, TreeNode* root) {
-        if (dp[root].count(can)) {
-            return dp[root][can];
-        }
         if (root == NULL) {
             dp[root][can] = 0;
             return 0;
+        }
+        if (dp[root].count(can)) {
+            return dp[root][can];
         }
         if (!can) {
             dp[root][can] = solve(true, root->left) + solve(true, root->right);
