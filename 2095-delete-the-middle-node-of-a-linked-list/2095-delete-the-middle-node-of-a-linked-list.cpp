@@ -24,7 +24,6 @@ public:
         for(int i =0; i<n/2-1; i++){
             last = last->next;
         }
-        cout<<last->val;
         last->next = last->next->next;
         return head;
     }
