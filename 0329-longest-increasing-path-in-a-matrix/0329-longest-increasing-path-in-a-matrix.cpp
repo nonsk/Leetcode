@@ -1,38 +1,40 @@
 class Solution {
 public:
-    int dfs(int i, int j, vector<vector<int>>& matrix, vector<vector<int>>& dp, int &n, int &m) {
-        if (dp[i][j] != -1) return dp[i][j];
-        int maxPath = 1;
-        
-        vector<pair<int, int>> directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
-        
-        for (const auto& dir : directions) {
-            int ni = i + dir.first;
-            int nj = j + dir.second;
-            
-            if (ni >= 0 && ni < n && nj >= 0 && nj < m && matrix[ni][nj] > matrix[i][j]) {
-                maxPath = max(maxPath, 1 + dfs(ni, nj, matrix, dp,n,m));
-            }
+    int dp[200][200];
+    int m;
+    int n;
+    int helper(int i, int j,vector<vector<int>>& nums) {
+        if(dp[i][j] != -1) {
+            return dp[i][j];
         }
-        
-        dp[i][j] = maxPath;
-        return maxPath;
+        dp[i][j] = 1;
+        if(i+1 < m  && nums[i][j] > nums[i+1][j]) {
+           dp[i][j] = max(dp[i][j],1 + helper(i+1,j,nums));
+        }
+        if(i-1 >= 0  && nums[i][j] > nums[i-1][j]) {
+           dp[i][j] = max(dp[i][j],1 + helper(i-1,j,nums));
+        }
+        if(j+1 < n  && nums[i][j] > nums[i][j+1]) {
+           dp[i][j] = max(dp[i][j],1 + helper(i,j+1,nums));
+        }
+        if(j-1 >= 0  && nums[i][j] > nums[i][j-1]) {
+           dp[i][j] = max(dp[i][j],1 + helper(i,j-1,nums));
+        }
+        return dp[i][j];                        
     }
-    
-    int longestIncreasingPath(vector<vector<int>>& matrix) {
-        if (matrix.empty() || matrix[0].empty()) return 0;
-        
-        int n = matrix.size();
-        int m = matrix[0].size();
-        vector<vector<int>> dp(n, vector<int>(m, -1));
-        int answer = 0;
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                answer = max(answer, dfs(i, j, matrix, dp,n,m));
+    int longestIncreasingPath(vector<vector<int>>& nums) {
+        m = nums.size(); n = nums[0].size();
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                dp[i][j] = -1;
             }
         }
-        
-        return answer;
+        int ans = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                ans = max(ans,helper(i,j,nums));
+            }
+        }
+        return ans;
     }
 };
