@@ -9,7 +9,6 @@ public:
                 st.pop();
             }
             st.push(nums[i]);
-            stack<int> st2 = st;
         }
         for (int i = n - 1; i >= 0; i--) {
             while (!st.empty() && st.top() <= nums[i]) {
@@ -21,7 +20,6 @@ public:
                 ans[i] = st.top();
             }
                 st.push(nums[i]);
-            stack<int> st2 = st;
         }
         return ans;
     }
