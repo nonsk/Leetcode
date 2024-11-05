@@ -10,11 +10,6 @@ public:
             }
             st.push(nums[i]);
             stack<int> st2 = st;
-            while (!st2.empty()) {
-                cout << st2.top() << " ";
-                st2.pop();
-            }
-            cout << endl;
         }
         for (int i = n - 1; i >= 0; i--) {
             while (!st.empty() && st.top() <= nums[i]) {
@@ -27,11 +22,6 @@ public:
             }
                 st.push(nums[i]);
             stack<int> st2 = st;
-            while (!st2.empty()) {
-                cout << st2.top() << " ";
-                st2.pop();
-            }
-            cout << endl;
         }
         return ans;
     }
