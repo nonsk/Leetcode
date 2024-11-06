@@ -1,27 +1,26 @@
 class Solution {
 public:
     int maxlen;
-    string chars;
     string main;
+    string chars;
 
-    bool isValid(string& s) {
-        stack<char> st;
+    // Optimized isValid function with counter instead of stack
+    bool isValid(const string& s) {
+        int balance = 0;
         for (char c : s) {
             if (c == '(') {
-                st.push(c);
+                balance++;
             } else if (c == ')') {
-                if (!st.empty()) {
-                    st.pop();
-                } else {
-                    return false;
-                }
+                if (balance == 0) return false;
+                balance--;
             }
         }
-        return st.empty();
+        return balance == 0;
     }
 
-    void f(int valid_open, int valid_close, int t_char, unordered_set<string>& ans,
-                  string curr, const string& chars, int index) {
+    // Optimized recursive function with in-place string modification
+    void generate(int valid_open, int valid_close, int t_char, unordered_set<string>& ans,
+                  string& curr, int index) {
         if (valid_open < 0 || valid_close < 0 || t_char < 0 || index > main.size()) {
             return;
         }
@@ -32,30 +31,41 @@ public:
             return;
         }
 
+        // Keep current length to backtrack in-place
+        int len = curr.size();
+
         if (main[index] == '(') {
-            f(valid_open - 1, valid_close, t_char, ans, curr + '(', chars, index + 1);
+            curr += '(';
+            generate(valid_open - 1, valid_close, t_char, ans, curr, index + 1);
+            curr.resize(len);  // Backtrack
         } else if (main[index] == ')') {
-            f(valid_open, valid_close - 1, t_char, ans, curr + ')', chars, index + 1);
-        } else if (!chars.empty()) {
-            f(valid_open, valid_close, t_char - 1, ans, curr + chars[0], chars.substr(1), index + 1);
+            curr += ')';
+            generate(valid_open, valid_close - 1, t_char, ans, curr, index + 1);
+            curr.resize(len);  // Backtrack
+        } else {
+            curr += main[index];
+            generate(valid_open, valid_close, t_char - 1, ans, curr, index + 1);
+            curr.resize(len);  // Backtrack
         }
-        f(valid_open, valid_close, t_char, ans, curr, chars, index + 1);
+
+        // Recurse without current character
+        generate(valid_open, valid_close, t_char, ans, curr, index + 1);
     }
 
     vector<string> removeInvalidParentheses(string s) {
         main = s;
-        stack<char> st;
         unordered_set<string> ans;
         int open = 0, close = 0, t_open = 0, t_close = 0, t_char = 0;
 
+        // Precompute `chars` and count invalid open and close parentheses
         for (char c : s) {
             if (c == '(') {
                 t_open++;
-                st.push(c);
+                open++;
             } else if (c == ')') {
                 t_close++;
-                if (!st.empty()) {
-                    st.pop();
+                if (open > 0) {
+                    open--;
                 } else {
                     close++;
                 }
@@ -65,11 +75,14 @@ public:
             }
         }
 
-        open = st.size();
         int valid_open = max(0, t_open - open);
         int valid_close = max(0, t_close - close);
         maxlen = s.size() - open - close;
-        f(valid_open, valid_close, t_char, ans, "", chars, 0);
+
+        // Start recursive generation with optimized parameters
+        string curr;
+        generate(valid_open, valid_close, t_char, ans, curr, 0);
+
         return vector<string>(ans.begin(), ans.end());
     }
 };
