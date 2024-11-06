@@ -3,7 +3,7 @@ public:
     int maxlen;
     string main;
     string chars;
-    bool valid(string s) {
+    bool valid(const string& s) {
         int balance = 0;
         for (char c : s) {
             if (c == '(') {
@@ -68,6 +68,7 @@ public:
         maxlen = s.size() - open - close;
         string curr;
         generate(valid_open, valid_close, t_char, ans, curr, 0);
+
         return vector<string>(ans.begin(), ans.end());
     }
 };
