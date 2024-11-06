@@ -16,7 +16,6 @@ public:
     vector<int> inorder;
     void f(TreeNode* root) {
         if (root == NULL) {
-            // inorder.push_back(-1);
             return;
         }
         f(root->left);
@@ -24,11 +23,7 @@ public:
         f(root->right);
     }
     BSTIterator(TreeNode* root) {
-
         f(root);
-        for (auto it : inorder) {
-            cout << it << " ";
-        }
     }
 
     int next() {
