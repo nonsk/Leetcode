@@ -1,7 +1,8 @@
 class Solution {
 public:
     int solve(int day, vector<int>& days, vector<int>& costs, vector<int>& dp, unordered_set<int>& travelDays) {
-        if (day > 365) {
+        cout<<day<<endl;
+        if (day > days[days.size()-1]) {
             return 0;
         }
         if (dp[day] != -1) {
