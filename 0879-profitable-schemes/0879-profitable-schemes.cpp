@@ -1,7 +1,6 @@
 class Solution {
 public:
     int mod = 1e9 + 7;
-
     int profitableSchemes(int n, int minProfit, vector<int>& group, vector<int>& profit) {
         vector<vector<int>> dp(n + 1, vector<int>(minProfit + 1, 0));
         dp[0][0] = 1;
