@@ -1,20 +1,20 @@
 class Solution {
 public:
-    int solve(vector<int>& dp, int n) {
+    int solve(long long n, std::unordered_map<long long, int>& memo) {
         if (n == 1) return 0;
-        if (dp[n] != -1) return dp[n];
+        if (memo.count(n)) return memo[n];
 
         if (n % 2 == 0) {
-            dp[n] = 1 + solve(dp, n / 2);
+            memo[n] = 1 + solve(n / 2, memo);
         } else {
-            dp[n] = 2 + min(solve(dp, (n + 1)/2), solve(dp, (n - 1)/2)); 
+            memo[n] = 1 + std::min(solve(n + 1, memo), solve(n - 1, memo));
         }
 
-        return dp[n];
+        return memo[n];
     }
 
     int integerReplacement(int n) {
-        vector<int> dp(max(n + 1, 2), -1);
-        return solve(dp, n);
+        std::unordered_map<long long, int> memo;
+        return solve(n, memo);
     }
 };
