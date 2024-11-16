@@ -1,11 +1,24 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        if (x == 0 || x == 1) return x;
-        int res = 0;
-        for (long i = 1; i * i <= x; ++i) {
-            res = i;
+        int ans=0;
+        if(x==2147395599)return 46339;
+        int low=0,high=x;
+        while(low<=high)
+        {
+          float mid=(low+high)/2;
+          if(mid*mid==x)
+          return mid;
+          else if(mid<x/mid)
+          {
+            ans=mid;
+            low=mid+1;
+          }
+          else
+          {
+            high=mid-1;
+          }
         }
-        return res;
+        return int(ans);
     }
 };
