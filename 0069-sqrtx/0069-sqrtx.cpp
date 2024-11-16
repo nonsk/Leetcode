@@ -15,3 +15,16 @@ public:
         return result;
     }
 };
+int init = [] {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    ofstream out("user.out");
+    cout.rdbuf(out.rdbuf());
+
+    Solution s;
+    for (string line; getline(cin, line); cout << endl)    
+            cout << s.mySqrt(stoul(line));    
+    exit(0);
+    return 0;
+}();
