@@ -1,24 +1,18 @@
 class Solution {
-public:
-    int mySqrt(int x) {
-        int ans=0;
-        if(x==2147395599)return 46339;
-        int low=0,high=x;
-        while(low<=high)
-        {
-          float mid=(low+high)/2;
-          if(mid*mid==x)
-          return mid;
-          else if(mid<x/mid)
-          {
-            ans=mid;
-            low=mid+1;
-          }
-          else
-          {
-            high=mid-1;
-          }
-        }
-        return int(ans);
+ public:
+  int mySqrt(int x) {
+    unsigned l = 1;
+    unsigned r = x + 1u;
+
+    while (l < r) {
+      const unsigned m = (l + r) / 2;
+      if (m > x / m)
+        r = m;
+      else
+        l = m + 1;
     }
+
+    // l := the minimum number s.t. l * l > x
+    return l - 1;
+  }
 };
