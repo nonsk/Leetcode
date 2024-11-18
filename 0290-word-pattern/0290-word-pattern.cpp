@@ -1,59 +1,47 @@
 class Solution {
 public:
     bool wordPattern(string pattern, string s) {
-        string current = "";
-        vector<string> yo;
-        for (auto c : s) {
-            if (c == ' ') {
-                yo.push_back(current);
-                current = "";
-            } else {
-                current += c;
-            }
+        // Split the string s into words using istringstream
+        vector<string> words;
+        string word;
+        istringstream stream(s);
+        while (stream >> word) {
+            words.push_back(word);
         }
-        if (current != "") {
-            yo.push_back(current);
-        }
-        for (auto it : yo) {
-            cout << it << endl;
-        }
-        unordered_set<char> st1;
-        unordered_set<string> st2;
-        for (auto c : pattern) {
-            st1.insert(c);
-        }
-        for (auto c : yo) {
-            st2.insert(c);
-        }
-        for (auto it : st1) {
-            cout << it << endl;
-        }
-        for (auto it : st2) {
-            cout << it << endl;
-        }
-        if (pattern.size() != yo.size()) {
+
+        // If the number of pattern characters doesn't match the number of words
+        if (pattern.size() != words.size()) {
             return false;
         }
+
+        // Maps to store the bijection between pattern characters and words
         unordered_map<char, string> charToWord;
         unordered_map<string, char> wordToChar;
+
         for (size_t i = 0; i < pattern.size(); ++i) {
             char c = pattern[i];
-            string word = yo[i];
+            const string& w = words[i];
+
+            // Check mapping from character to word
             if (charToWord.find(c) != charToWord.end()) {
-                if (charToWord[c] != word) {
+                if (charToWord[c] != w) {
                     return false;
                 }
             } else {
-                charToWord[c] = word;
+                charToWord[c] = w;
             }
-            if (wordToChar.find(word) != wordToChar.end()) {
-                if (wordToChar[word] != c) {
+
+            // Check mapping from word to character
+            if (wordToChar.find(w) != wordToChar.end()) {
+                if (wordToChar[w] != c) {
                     return false;
                 }
             } else {
-                wordToChar[word] = c;
+                wordToChar[w] = c;
             }
         }
+
+        // All mappings are consistent
         return true;
     }
 };
