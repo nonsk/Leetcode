@@ -1,42 +1,31 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+
+
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-          if (nums.empty()) return nullptr;
+        if (nums.empty()) return nullptr;
         
-        // Stack to simulate the call stack
-        stack<pair<TreeNode**, pair<int, int>>> stk;
+        // Start building the BST using the helper function
+        return buildTree(nums, 0, nums.size() - 1);
+    }
+
+private:
+    // Helper function to build tree in optimal time
+    TreeNode* buildTree(const vector<int>& nums, int left, int right) {
+        if (left > right) return nullptr;
+
+        // Use mid point to divide the array
+        int mid = left + (right - left) / 2;
         
-        // Initializing with the entire range of the array
-        TreeNode* root = nullptr;
-        stk.push({&root, {0, nums.size() - 1}});
-        
-        while (!stk.empty()) {
-            auto [node, range] = stk.top();
-            stk.pop();
-            
-            int left = range.first, right = range.second;
-            if (left > right) continue;
-            
-            int mid = left + (right - left) / 2;
-            *node = new TreeNode(nums[mid]);
-            
-            // Push right child first (because we're simulating recursion in a stack)
-            stk.push({&((*node)->right), {mid + 1, right}});
-            // Then push left child
-            stk.push({&((*node)->left), {left, mid - 1}});
-        }
-        
+        // Create the current node
+        TreeNode* root = new TreeNode(nums[mid]);
+
+        // Build left subtree recursively
+        root->left = buildTree(nums, left, mid - 1);
+
+        // Build right subtree recursively
+        root->right = buildTree(nums, mid + 1, right);
+
         return root;
     }
 };
