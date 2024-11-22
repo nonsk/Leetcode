@@ -11,15 +11,32 @@
  */
 class Solution {
 public:
-TreeNode* buildTree(vector<int>& nums, int left, int right) {
-        if (left > right) return nullptr;
-        int mid = left + (right - left) / 2;
-        TreeNode* root = new TreeNode(nums[mid]);
-        root->left = buildTree(nums, left, mid - 1);
-        root->right = buildTree(nums, mid + 1, right);
-        return root;
-    }
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return buildTree(nums, 0, nums.size() - 1);
+          if (nums.empty()) return nullptr;
+        
+        // Stack to simulate the call stack
+        stack<pair<TreeNode**, pair<int, int>>> stk;
+        
+        // Initializing with the entire range of the array
+        TreeNode* root = nullptr;
+        stk.push({&root, {0, nums.size() - 1}});
+        
+        while (!stk.empty()) {
+            auto [node, range] = stk.top();
+            stk.pop();
+            
+            int left = range.first, right = range.second;
+            if (left > right) continue;
+            
+            int mid = left + (right - left) / 2;
+            *node = new TreeNode(nums[mid]);
+            
+            // Push right child first (because we're simulating recursion in a stack)
+            stk.push({&((*node)->right), {mid + 1, right}});
+            // Then push left child
+            stk.push({&((*node)->left), {left, mid - 1}});
+        }
+        
+        return root;
     }
 };
