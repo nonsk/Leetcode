@@ -4,7 +4,7 @@ public:
         if(n<=0){
             return false;
         }
-        long int temp= 1;
+        double temp= 1;
         while(temp<=n){
             if(temp==n){
                 return true;
